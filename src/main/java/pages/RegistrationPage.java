@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,11 +14,11 @@ public class RegistrationPage {
     private final WebDriver driver;
 
     // поле "Имя"
-    private final By textboxNameOnRegPage = By.xpath(".//fieldset[1]//input");
+    private final By textboxNameOnRegPage = By.xpath(".//label[text() = 'Имя']/parent::div/input");
     // поле "Email"
-    private final By textboxEmailOnRegPage = By.xpath(".//fieldset[2]//input");
+    private final By textboxEmailOnRegPage = By.xpath(".//label[text() = 'Email']/parent::div/input");
     //поле "Пароль"
-    private final By textboxPasswordOnRegPage = By.xpath(".//fieldset[3]//input");
+    private final By textboxPasswordOnRegPage = By.xpath(".//input[@name = 'Пароль']");
 
     //кнопка "Зарегистрироваться"
     private final By signInButtonOnRegPage = By.xpath(".//button[text()='Зарегистрироваться']");
@@ -32,45 +33,45 @@ public class RegistrationPage {
     }
 
 
-    //ввод текста в поле "Имя"
+    @Step("ввод текста в поле Имя")
     public RegistrationPage fillTextBoxNameOnRegPage(String name){
         driver.findElement(textboxNameOnRegPage).click();
         driver.findElement(textboxNameOnRegPage).sendKeys(name);
         return this;
     }
 
-    //ввод текста в поле "Email"
+    @Step("ввод текста в поле Email")
     public RegistrationPage fillTextboxEmailOnRegPage(String email){
         driver.findElement(textboxEmailOnRegPage).click();
         driver.findElement(textboxEmailOnRegPage).sendKeys(email);
         return this;
     }
 
-    //ввод текста в поле "Пароль"
+    @Step("ввод текста в поле Пароль")
     public RegistrationPage fillTextboxPasswordOnRegPage(String password){
         driver.findElement(textboxPasswordOnRegPage).sendKeys(password);
         return this;
     }
 
-    //кнопка "Зарегистрироваться"
+    @Step("клик по кнопке Зарегистрироваться")
     public LoginPage clickBtnSignINOnRegPage(){
         driver.findElement(signInButtonOnRegPage).click();
         return new LoginPage(driver);
     }
 
-    //проверка текста ошибки для пароля меньше 6 символов
+    @Step("проверка текста ошибки для пароля меньше 6 символов")
     public RegistrationPage checkErrorMessageOnRegPage(){
         driver.findElement(errorMessageForPasswordOnRegPage).isDisplayed();
         return this;
     }
 
-    //клик по полю "Имя"
+    @Step("клик по полю Имя")
     public RegistrationPage clickTextboxNameOnRegPage(){
         driver.findElement(textboxNameOnRegPage).click();
         return this;
     }
 
-    //клик по кнопке "Войти"
+   @Step("Клик по кнопке Войти")
     public LoginPage clickLoginBtnOnRegPage(){
         driver.findElement(loginButtonOnRegPage).click();
         return new LoginPage(driver);

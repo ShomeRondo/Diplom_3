@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -18,20 +19,12 @@ public class MainPage {
     //кнопка "Личный кабинет"
     private final By profileButtonOnMainPage = By.xpath("//p[text()='Личный Кабинет']");
     //кнопка "Булки"
-    private final By bunsButtonOnMainPage =  By.xpath(".//span[text() = 'Булки']");
+    private final By bunsButtonOnMainPage =  By.xpath(".//span[text()='Булки']//parent::div");
     //кнопка "Соусы"
-    private final By sauseButtonOnMainPage = By.xpath(".//span[text() = 'Соусы']");
+    private final By sauseButtonOnMainPage = By.xpath(".//span[text()='Соусы']//parent::div");
     //кнопка "Начинки"
-    private final By fillingsButtonOnMainPage = By.xpath(".//h2[text() = 'Начинки']");
+    private final By fillingsButtonOnMainPage = By.xpath(".//span[text()='Начинки']//parent::div");
 
-    //Текст заголовок "Булки"
-    private final By bunsText = By.xpath(".//h2[text()='Булки']");
-
-    //Текст заголовок "Соусы"
-    private final By saucesText = By.xpath(".//h2[text()='Соусы']");
-
-    //Текст заголовок "Начинки"
-    private final By fillingsText = By.xpath(".//h2[text()='Начинки']");
 
     //кнопка "Оформить заказ"
     private final By btnOrder = By.xpath(".//button[text()='Оформить заказ']");
@@ -41,47 +34,49 @@ public class MainPage {
         this.driver = driver;
     }
 
+
+    @Step("Открытие главной страницы сайта")
     public MainPage mainPageOpen(){
         driver.get(MAIN_PAGE_URL);
         return this;
     }
 
-    //клик по кнопке "Войти в аккаунт"
+    @Step("клик по кнопке Войти в аккаунт")
     public LoginPage clickBtnLoginOnMainPage(){
         driver.findElement(loginButtonOnMainPage).click();
         return new LoginPage(driver);
     }
 
-    //клик по кнопке "Личный кабинет"
+    @Step("клик по кнопке Личный кабинет")
     public LoginPage clickBtnProfileOnMainPage(){
         driver.findElement(profileButtonOnMainPage).click();
         return new LoginPage(driver);
     }
 
-    //клик по кнопке "Личный кабинет" после авторизации
+    @Step("клик по кнопке Личный кабинет после авторизации")
     public void clickBtnProfileAfterAuthorisation(){
         driver.findElement(profileButtonOnMainPage).click();
     }
 
-    //клик по разделу "Булки"
+    @Step("клик по разделу Булки")
     public MainPage clickBunsBtnOnMainPage(){
         driver.findElement(bunsButtonOnMainPage).click();
         return this;
     }
 
-    //клик по разделу "Соусы"
+    @Step("клик по разделу Соусы")
     public MainPage clickSauseBtnOnMainPage(){
         driver.findElement(sauseButtonOnMainPage).click();
         return this;
     }
 
-    //клик по разделу "Начинки"
+    @Step("клик по разделу Начинки")
     public MainPage clickFillingBtn(){
         driver.findElement(fillingsButtonOnMainPage).click();
         return this;
     }
 
-    //проверка кнопки "Оформить заказ"
+    @Step("проверка кнопки Оформить заказ")
     public MainPage checkOrderBtn(){
         new WebDriverWait(driver, Duration.ofSeconds(WAIT_SECONDS_TIMEOUT))
                 .until(ExpectedConditions.visibilityOfElementLocated(btnOrder));
@@ -89,27 +84,18 @@ public class MainPage {
         return this;
     }
 
-    //проверка заголовка "Булки"
-    public MainPage checkHeaderBuns(){
-        new WebDriverWait(driver, Duration.ofSeconds(WAIT_SECONDS_TIMEOUT))
-                .until(ExpectedConditions.visibilityOfElementLocated(bunsText));
-        driver.findElement(bunsText).isDisplayed();
-        return this;
-    }
-    //проверка заголовка "Соусы"
+   @Step("проверка атрибута для кнопки Булки после выбора")
+    public String checkAtrubuteForBuns(){
+        return driver.findElement(bunsButtonOnMainPage).getAttribute("class");
+   }
 
-    public MainPage checkHeaderSauces(){
-        new WebDriverWait(driver, Duration.ofSeconds(WAIT_SECONDS_TIMEOUT))
-                .until(ExpectedConditions.visibilityOfElementLocated(saucesText));
-        driver.findElement(saucesText).isDisplayed();
-        return this;
+    @Step("проверка атрибута для кнопки Соусы после выбора")
+    public String checkAtrubuteForSauce(){
+        return driver.findElement(sauseButtonOnMainPage).getAttribute("class");
     }
 
-    //проверка заголовка "Начинки"
-    public MainPage checkHeaderFillings(){
-        new WebDriverWait(driver, Duration.ofSeconds(WAIT_SECONDS_TIMEOUT))
-                .until(ExpectedConditions.visibilityOfElementLocated(fillingsText));
-        driver.findElement(fillingsText).isDisplayed();
-        return this;
+    @Step("проверка атрибута для кнопки Начинки после выбора")
+    public String checkAtrubuteForFilling(){
+        return driver.findElement(fillingsButtonOnMainPage).getAttribute("class");
     }
 }

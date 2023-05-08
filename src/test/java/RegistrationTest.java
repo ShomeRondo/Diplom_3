@@ -1,37 +1,9 @@
-import config.BaseURI;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.RestAssured;
-import model.User;
-import model.UserCredential;
-import model.UserMethods;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
 import pages.MainPage;
 import pages.RegistrationPage;
 
-import static driver.WebDriverCreator.createWebDriver;
-
-public class RegistrationTest {
-    private WebDriver driver;
-    private User user;
-    private UserMethods userMethods;
-    private UserCredential credential;
-    private String accessToken;
-
-    private String name ="Джорно";
-    private String email = "jjovanno@yandex.ru";
-    private String password = "123test";
-
-
-    @Before
-    public void setup() {
-        driver = createWebDriver();
-        RestAssured.baseURI = BaseURI.baseURI;
-        userMethods = new UserMethods();
-        user = new User(name, email, password);
-    }
+public class RegistrationTest extends BaseTest{
 
     @Test
     @DisplayName("Успешная регистрация")
@@ -66,11 +38,4 @@ public class RegistrationTest {
                 .clickTextboxNameOnRegPage()
                 .checkErrorMessageOnRegPage();
     }
-
-    @After
-    public void teardown() {
-        driver.quit();
-        if(accessToken!= null) userMethods.deleteUser(accessToken);
-    }
-
 }

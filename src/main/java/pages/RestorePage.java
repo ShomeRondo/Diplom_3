@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -17,7 +18,7 @@ public class RestorePage {
         this.driver = driver;
     }
 
-    //клик по кнопке "Войти"
+   @Step("Клик по кнопке Войти")
     public LoginPage clickLoginBtn(){
         driver.findElement(loginButton).click();
         return new LoginPage(driver);

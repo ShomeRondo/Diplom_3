@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -24,19 +25,19 @@ public class ProfilePage {
         this.driver = driver;
     }
 
-    //клик по конструктору
+    @Step("Клик по конструктору")
     public MainPage clickConstructorBtnOnMainPage(){
         driver.findElement(constructorButtonOnMainPage).click();
         return new MainPage(driver);
     }
 
-    //клик по логотипу
+    @Step("Клик по логотипу")
     public MainPage clickLogoOnMainPage(){
         driver.findElement(logoOnMainPage).click();
         return new MainPage(driver);
     }
 
-    //проверка кнопки "Выход"
+    @Step("проверка доступности кнопки Выход")
     public ProfilePage checkLogoutBtn(){
         new WebDriverWait(driver, Duration.ofSeconds(WAIT_SECONDS_TIMEOUT))
                 .until(ExpectedConditions.visibilityOfElementLocated(logoutButton));

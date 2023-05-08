@@ -1,42 +1,16 @@
-import config.BaseURI;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.RestAssured;
-import model.User;
-import model.UserCredential;
-import model.UserMethods;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
 import pages.LoginPage;
 import pages.MainPage;
 import pages.ProfilePage;
 
-import static driver.WebDriverCreator.createWebDriver;
 
-public class ProfileTest {
-    private WebDriver driver;
-    private User user;
-    private UserMethods userMethods;
-    private UserCredential credential;
-    private String accessToken;
-
-    private String name ="Джорно";
-    private String email = "jjovanno@yandex.ru";
-    private String password = "123test";
-
-    @Before
-    public void setup() {
-        driver = createWebDriver();
-        RestAssured.baseURI = BaseURI.baseURI;
-        user = new User(name, email, password);
-        userMethods = new UserMethods();
-        accessToken = userMethods.createUser(user).extract().path("accessToken").toString();
-    }
+public class ProfileTest extends BaseTest{
 
     @Test
     @DisplayName("переход по клику на «Личный кабинет»")
     public void checkProfilePage(){
+        accessToken = userMethods.createUser(user).extract().path("accessToken").toString();
         MainPage loginPage = new MainPage(driver)
                 .mainPageOpen()
                 .clickBtnLoginOnMainPage()
@@ -53,6 +27,7 @@ public class ProfileTest {
     @Test
     @DisplayName(" переход по клику на «Конструктор»")
     public void checkConstructorBtn(){
+        accessToken = userMethods.createUser(user).extract().path("accessToken").toString();
         MainPage loginPage = new MainPage(driver)
                 .mainPageOpen()
                 .clickBtnLoginOnMainPage()
@@ -70,6 +45,7 @@ public class ProfileTest {
     @Test
     @DisplayName("переход по клику на логотип")
     public void checkLogoBtn(){
+        accessToken = userMethods.createUser(user).extract().path("accessToken").toString();
         MainPage loginPage = new MainPage(driver)
                 .mainPageOpen()
                 .clickBtnLoginOnMainPage()
@@ -87,6 +63,7 @@ public class ProfileTest {
     @Test
     @DisplayName("выход по кнопке «Выйти» в личном кабинете")
     public void checkLogoutFromProfile(){
+        accessToken = userMethods.createUser(user).extract().path("accessToken").toString();
         MainPage loginPage = new MainPage(driver)
                 .mainPageOpen()
                 .clickBtnLoginOnMainPage()
@@ -100,11 +77,5 @@ public class ProfileTest {
                 .checkLogoutBtn()
                 .cliclLogoutBtn()
                 .checkHearderOnLoginPage();
-    }
-
-    @After
-    public void teardown() {
-        driver.quit();
-        if(accessToken!= null) userMethods.deleteUser(accessToken);
     }
 }

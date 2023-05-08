@@ -1,31 +1,21 @@
-import config.BaseURI;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.RestAssured;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
 import pages.MainPage;
 
-import static driver.WebDriverCreator.createWebDriver;
+import static org.junit.Assert.assertTrue;
 
-public class ConstructorTest {
-    private WebDriver driver;
-
-    @Before
-    public void setup() {
-        driver = createWebDriver();
-        RestAssured.baseURI = BaseURI.baseURI;
-    }
+public class ConstructorTest extends BaseTest{
 
     @Test
     @DisplayName("переход к разделу Булки")
     public void checkTransferToBuns(){
         MainPage mainPage = new MainPage(driver)
                 .mainPageOpen()
-                .clickSauseBtnOnMainPage()
-                .clickBunsBtnOnMainPage()
-                .checkHeaderBuns();
+                .clickFillingBtn()
+                .clickBunsBtnOnMainPage();
+        String actual = mainPage.checkAtrubuteForBuns();
+        assertTrue(actual.contains("current"));
+
     }
 
     @Test
@@ -33,8 +23,9 @@ public class ConstructorTest {
     public void checkTransferToSauces(){
         MainPage mainPage = new MainPage(driver)
                 .mainPageOpen()
-                .clickSauseBtnOnMainPage()
-                .checkHeaderSauces();
+                .clickSauseBtnOnMainPage();
+        String actual = mainPage.checkAtrubuteForSauce();
+        assertTrue(actual.contains("current"));
     }
 
     @Test
@@ -42,13 +33,8 @@ public class ConstructorTest {
     public void checkTransferToFillings(){
         MainPage mainPage = new MainPage(driver)
                 .mainPageOpen()
-                .clickFillingBtn()
-                .checkHeaderFillings();
-    }
-
-
-    @After
-    public void teardown() {
-        driver.quit();
+                .clickFillingBtn();
+        String actual = mainPage.checkAtrubuteForFilling();
+        assertTrue(actual.contains("current"));
     }
 }

@@ -1,4 +1,4 @@
-package driver;
+package extentions;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -23,8 +23,9 @@ public class WebDriverCreator {
             case "yandex":
                 return createYandexDriver();
             case "chrome":
-            default:
                 return createChromeDriver();
+            default:
+                throw new RuntimeException("Browser " + browser + " not exist") ;
         }
     }
 
